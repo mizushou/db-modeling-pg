@@ -1,0 +1,19 @@
+version: '3'
+services:
+  db:
+    container_name: db_pg
+    image: mysql:5.7.21
+    environment:
+      - "MYSQL_ROOT_PASSWORD=password"
+      - "MYSQL_DATABASE=pg_db"
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_pg_data:/var/lib/mysql
+      - ./test.cnf:/etc/mysql/mysql.conf.d/test.cnf
+      - ./logs:/var/log/mysql
+    entrypoint: ""
+    command: bash -c "chown -R mysql:mysql /var/log/mysql && exec /entrypoint.sh mysqld"
+
+volumes:
+    db_pg_data:
